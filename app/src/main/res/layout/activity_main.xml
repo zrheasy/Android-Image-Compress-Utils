@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSelectImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择图片" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCompressImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="压缩图片" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCompressConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置压缩参数" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tvOrigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="原图大小: 4kb | 分辨率：1080x1960" />
+
+        <ImageView
+            android:id="@+id/ivOrigin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tvCompress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:text="原图大小: 4kb | 分辨率：1080x1960" />
+
+        <ImageView
+            android:id="@+id/ivCompress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>
