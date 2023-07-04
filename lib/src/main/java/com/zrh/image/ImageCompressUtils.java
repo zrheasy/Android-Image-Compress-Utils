@@ -105,7 +105,7 @@ public class ImageCompressUtils {
      * @param config    压缩配置
      * @return 返回压缩后的文件，压缩失败则返回原文件
      */
-    public static File compressImage(File imageFile, File outputDir, String fileName, Config config) {
+    public static File compress(File imageFile, File outputDir, String fileName, Config config) {
 
         Bitmap bitmap = getBitmap(imageFile, config.maxWidth, config.maxHeight);
 

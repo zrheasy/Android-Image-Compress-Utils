@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         flow<Pair<Bitmap, File>> {
             val fileName = (System.currentTimeMillis() / 1000).toString()
             val dir = File(cacheDir.absolutePath + "/image_compress")
-            val file = ImageCompressUtils.compressImage(imageFile!!, dir, fileName, mConfig)
+            val file = ImageCompressUtils.compress(imageFile!!, dir, fileName, mConfig)
             val bitmap = ImageCompressUtils.getBitmap(file, 0, 0)
                 ?: throw IOException("load image error: ${file.absoluteFile}")
             emit(Pair(bitmap, file))
