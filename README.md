@@ -8,7 +8,7 @@ Android轻量级图片压缩工具库。
 ### 使用方式
 #### 1.下载AAR并添加到项目依赖中。
 ```groovy
-implementation(name:"image-compress-v1.0", ext:"aar")
+implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 ```
 #### 2.调用压缩图片函数（建议在IO线程中执行）。
 ```kotlin
