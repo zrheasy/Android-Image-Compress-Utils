@@ -1,7 +1,7 @@
 # Android-Image-Compress-Utils
 Android轻量级图片压缩工具库。
 
-[下载地址](https://github.com/zrh1994/Android-Image-Compress-Utils/releases/download/v1.0.0/image-compress-v1.0.aar)
+[下载地址](https://github.com/zrheasy/Android-Image-Compress-Utils/releases/download/v1.0.0/image-compress-v1.0.aar)
 
 ![压缩截图](assets/Image-Compress.png)
 
