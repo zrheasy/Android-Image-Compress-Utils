@@ -1,17 +1,17 @@
 package com.zrh.image
 
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.zrh.file.picker.FilePickCallback
+import com.zrh.file.picker.FilePickOptions
+import com.zrh.file.picker.FilePicker
+import com.zrh.file.picker.UriUtils
 import com.zrh.image.databinding.ActivityMainBinding
 import com.zrh.permission.PermissionUtils
 import kotlinx.coroutines.Dispatchers
@@ -20,16 +20,6 @@ import java.io.File
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
-    private val selectFileLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent = result.data!!
-                if (data.data != null) {
-                    loadImage(data.data!!)
-                }
-            }
-        }
-
     private lateinit var mBinding: ActivityMainBinding
     private val mConfig = ImageCompressUtils.Config().apply {
         maxWidth = 1080
@@ -87,26 +77,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selectFile() {
-        val i = Intent()
-        i.type = "image/*"
-        i.putExtra(Intent.EXTRA_MIME_TYPES, arrayListOf("image/*"))
-        i.action = Intent.ACTION_GET_CONTENT
-        i.addCategory(Intent.CATEGORY_OPENABLE)
-
-        try {
-            selectFileLauncher.launch(i)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        val options = FilePickOptions().apply {
+            mimeType = "image/*"
+            isAllowMultiple = false
         }
+        FilePicker.pick(this, options, object: FilePickCallback{
+            override fun onResult(data: MutableList<Uri>) {
+                loadImage(data[0])
+            }
+
+            override fun onError(p0: Int, p1: String) {
+
+            }
+        })
     }
 
     private fun loadImage(data: Uri) {
         val loading = LoadingDialog(this)
         flow<Pair<Bitmap, File>> {
-            val fileName = (System.currentTimeMillis() / 1000).toString()
-            val file =
-                FileUtils.getFileFromUri(applicationContext, data, File(cacheDir, "image"), fileName)
-                    ?: throw IOException("load image error: $data")
+            val cache = if (externalCacheDir != null) externalCacheDir else cacheDir
+            val file = UriUtils.getFileFromUri(applicationContext, data, File(cache, "image"))
             val bitmap = ImageCompressUtils.getBitmap(file, 0, 0)
                 ?: throw IOException("load image error: $data")
             emit(Pair(bitmap, file))
